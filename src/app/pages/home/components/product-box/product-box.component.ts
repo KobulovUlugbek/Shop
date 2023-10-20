@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-product-box',
@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-box.component.css']
 })
 export class ProductBoxComponent implements OnInit {
-
+  @Input() fullWidthMode = false;
+  
   constructor() { }
 
   ngOnInit(): void {

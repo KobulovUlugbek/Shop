@@ -39,14 +39,40 @@ export class CartService {
     });
   }
 
-  removeFromCart(item: CartItem): void {
+  removeFromCart(item: CartItem, update = true): Array<CartItem> {
     const filteredItems = this.cart.value.items.filter(
       (_item) => item.id !== item.id
     );
 
+    if(update){
+      this.cart.next({items: filteredItems});
+      this._snackBar.open('1 Item removed from cart,', 'OK', {
+        duration: 3000
+      });
+    }
+
+    return filteredItems;
+  }
+
+  removeQuantity(item: CartItem):void {
+    let itemForRemoval: CartItem | undefined;
+    let filteredItems = this.cart.value.items.map((_item) => {
+      if(_item.id === item.id){
+        _item.quantity --;
+        if(_item.quantity === 0){
+          itemForRemoval = _item;
+        }
+      }
+
+      return _item;
+    });
+    if(itemForRemoval){
+      filteredItems = this.removeFromCart(itemForRemoval, false);
+    }
+
     this.cart.next({items: filteredItems});
-    this._snackBar.open('1 Item removed from cart,', 'OK', {
-      duration: 3000
+    this._snackBar.open('1 item removed from cart', 'OK', {
+      duration:3000
     });
   }
   

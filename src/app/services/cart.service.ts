@@ -41,7 +41,7 @@ export class CartService {
 
   removeFromCart(item: CartItem, update = true): Array<CartItem> {
     const filteredItems = this.cart.value.items.filter(
-      (_item) => item.id !== item.id
+      (_item) => _item.id !== item.id
     );
 
     if(update){
